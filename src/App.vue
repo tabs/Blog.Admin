@@ -163,7 +163,7 @@
         mixins: [userAuth],
         data() {
             return {
-                sysName: 'BlogAdmin',
+                sysName: 'JDHelper',
                 sysNameShort: 'BD',
                 NewsVisible: false,
                 SidebarVisible: false,
