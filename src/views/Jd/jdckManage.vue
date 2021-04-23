@@ -17,6 +17,10 @@
       </el-table-column>
       <el-table-column prop="jJDCookie" label="ck" width="" sortable>
       </el-table-column>
+      <el-table-column prop="jRemark" label="备注信息" width="" sortable>
+      </el-table-column>
+      <el-table-column prop="jPhone" label="手机号码" width="" sortable>
+      </el-table-column>
       <el-table-column
         prop="jUpdateTime"
         label="更新时间"
@@ -36,9 +40,9 @@
       <el-table-column prop="jStatus" label="状态" width="" sortable>
         <template slot-scope="scope">
           <el-tag
-            :type="scope.row.jStatus == 0 ? 'success' : 'danger'"
+            :type="scope.row.jStatus == 0 ? 'danger' : 'success'"
             disable-transitions
-            >{{ scope.row.jStatus == 0 ? "正常" : "禁用" }}
+            >{{ scope.row.jStatus == 0 ? "禁用" : "正常" }}
           </el-tag>
         </template>
       </el-table-column>
@@ -67,6 +71,42 @@
       >
       </el-pagination>
     </el-col>
+    <!--编辑界面-->
+    <el-dialog
+      title="编辑"
+      :visible.sync="editFormVisible"
+      v-model="editFormVisible"
+      :close-on-click-modal="false"
+    >
+      <el-form
+        :model="editForm"
+        label-width="80px"
+        :rules="editFormRules"
+        ref="editForm"
+      >
+        <el-form-item label="备注信息" prop="jRemark">
+          <el-input v-model="editForm.jRemark" auto-complete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="手机号码" prop="jPhone">
+          <el-input v-model="editForm.jPhone" auto-complete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="状态">
+          <el-radio-group v-model="editForm.jStatus">
+            <el-radio class="radio" :label="0">禁用</el-radio>
+            <el-radio class="radio" :label="1">启用</el-radio>
+          </el-radio-group>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click.native="editFormVisible = false">取消</el-button>
+        <el-button
+          type="primary"
+          @click.native="editSubmit"
+          :loading="editLoading"
+          >提交</el-button
+        >
+      </div>
+    </el-dialog>
     <!--新增界面-->
     <el-dialog
       title="新增"
@@ -106,7 +146,12 @@
 import util from "../../../util/date";
 import * as signalR from "@aspnet/signalr";
 import { getButtonList } from "../../promissionRouter";
-import { BaseApiUrl, getJDCKLisytPage, getjdQrCodeImg } from "../../api/api";
+import {
+  BaseApiUrl,
+  getJDCKLisytPage,
+  getjdQrCodeImg,
+  editJdCk,
+} from "../../api/api";
 import Toolbar from "../../components/Toolbar";
 
 export default {
@@ -130,6 +175,23 @@ export default {
       addDialogFormVisible: false,
       addFormVisible: false, //新增界面是否显示
       addLoading: false,
+      editFormVisible: false, //编辑界面是否显示
+      editLoading: false,
+      editFormRules: {
+        jRemark: [
+          { required: true, message: "请输入备注信息", trigger: "blur" },
+        ],
+        jPhone: [
+          { required: true, message: "请输入手机号码", trigger: "blur" },
+        ],
+      },
+      //编辑界面数据
+      editForm: {
+        id: 0,
+        jRemark: "",
+        jPhone: "",
+        jStatus: 0,
+      },
     };
   },
   methods: {
@@ -176,9 +238,58 @@ export default {
         this.listLoading = false;
       });
     },
+    //显示编辑界面
+    handleEdit() {
+      let row = this.currentRow;
+      if (!row) {
+        this.$message({
+          message: "请选择要编辑的一行数据！",
+          type: "error",
+        });
+
+        return;
+      }
+      this.editFormVisible = true;
+      this.editForm = Object.assign({}, row);
+    },
     //显示新增界面
     handleAdd() {
       this.getQrcode();
+    },
+    //编辑
+    editSubmit: function () {
+      this.$refs.editForm.validate((valid) => {
+        if (valid) {
+          this.$confirm("确认提交吗？", "提示", {}).then(() => {
+            this.editLoading = true;
+            //NProgress.start();
+            let para = Object.assign({}, this.editForm);
+
+            editJdCk(para).then((res) => {
+              if (util.isEmt.format(res)) {
+                this.editLoading = false;
+                return;
+              }
+              if (res.data.success) {
+                this.editLoading = false;
+                //NProgress.done();
+                this.$message({
+                  message: res.data.msg,
+                  type: "success",
+                });
+                this.$refs["editForm"].resetFields();
+                this.editFormVisible = false;
+                this.getjdcks();
+              } else {
+                this.$message({
+                  message: res.data.msg,
+                  type: "error",
+                });
+              }
+            });
+          });
+        }
+      });
     },
     callFunction(item) {
       this.filters = {
@@ -255,6 +366,6 @@ export default {
 
 <style scoped>
 .el-main {
-    text-align: center;
-  }
+  text-align: center;
+}
 </style>

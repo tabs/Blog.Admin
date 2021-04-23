@@ -188,7 +188,9 @@ export const getJDCKLisytPage = params => {
         params: params
     });
 };
-
+export const editJdCk = params => {
+    return axios.put(`${base}/api/JDCookiesInfo/put`, params);
+};
 export const getjdQrCodeImg = params => {
     return axios.get(`${base}/api/JDCookiesInfo/qrcode`, {
         responseType: 'blob'
