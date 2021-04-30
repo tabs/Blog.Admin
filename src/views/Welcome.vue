@@ -59,21 +59,21 @@
         <span>操作指南</span>
       </div>
       <div class="text item">
-        <i class="el-icon-edit"></i>、在vue.config.js中配置项目端口号，以及代理后端API项目域名。
+        <i class="el-icon-edit"></i>、管理京东CK
       </div>
       <div class="text item">
-        <i class="el-icon-edit"></i>、在global.js中配置授权方案global.IS_IDS4。
+        <i class="el-icon-edit"></i>、管理京东CK
       </div>
       <div class="text item">
-        <i class="el-icon-edit"></i>、动态添加页面以及权限配置，看右侧两个动图。
+        <i class="el-icon-edit"></i>、管理京东CK
       </div>
-      <div class="text item">
-        <i class="el-icon-edit"></i>、更多内容，查看官方文档：
+      <!-- <div class="text item">
+        <i class="el-icon-edit"></i>、管理京东CK
         <a
           href="http://vueadmin.neters.club/.doc/"
           target="_blank"
         >http://vueadmin.neters.club/.doc/</a>。
-      </div>
+      </div> -->
     </el-card>
     <el-card class="welcome-card" style="width: 49%;margin: 0;font-size: 14px;">
       <div slot="header" class="clearfix">
@@ -135,7 +135,7 @@
       <br />
     </el-card>
 
-    <el-card class="welcome-card" style="margin-top: 20px;width: 98%;">
+    <!-- <el-card class="welcome-card" style="margin-top: 20px;width: 98%;">
       <div slot="header" class="clearfix">
         <span>相关配置</span>
       </div>
@@ -177,7 +177,7 @@
       </div>
 
       <br />
-    </el-card>
+    </el-card> -->
   </div>
 </template>
 

@@ -12,12 +12,12 @@ class ApplicationUserManager extends UserManager {
     //   post_logout_redirect_uri: 'https://vueadmin.neters.club'
     // })
         super({
-      authority: 'http://localhost:5004',
+      authority: 'http://192.168.123.120:5005',
       client_id: 'blogadminjs',
-      redirect_uri: 'http://localhost:2364/callback',
+      redirect_uri: 'http://192.168.123.120:81/callback',
       response_type: 'id_token token',
       scope: 'openid profile roles blog.core.api',
-      post_logout_redirect_uri: 'http://localhost:2364/'
+      post_logout_redirect_uri: 'http://192.168.123.120:81/'
     })
   }
 

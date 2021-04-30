@@ -40,7 +40,7 @@ module.exports = {
     proxy: {
       // 配置多个代理
       "/api": {
-        target: "http://localhost:8081",//这里改成你自己的后端api端口地址，记得每次修改，都需要重新build
+        target: "http://192.168.123.120:8083",//这里改成你自己的后端api端口地址，记得每次修改，都需要重新build
         //target: "http://localhost:58427",
         //target: "http://api.douban.com",
         ws: true,
@@ -51,12 +51,12 @@ module.exports = {
         }
       },
       "/images": {
-        target: "http://localhost:8081",
+        target: "http://192.168.123.120:8083",
         ws: true,
         changeOrigin: true
       },
       "/is4api": {
-        target: "http://localhost:5004",
+        target: "http://192.168.123.120:5005",
         ws: true,
         changeOrigin: true
       },

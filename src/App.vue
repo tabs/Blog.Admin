@@ -29,13 +29,13 @@
                         <img src="./assets/logo.png" height="128" width="128"/>
                     </span>
                             <el-dropdown-menu slot="dropdown">
-                                <el-dropdown-item @click.native="myNews">
+                                <!-- <el-dropdown-item @click.native="myNews">
                                     <el-badge :value="2" class="item" type="warning">
                                         我的消息
                                     </el-badge>
-                                </el-dropdown-item>
+                                </el-dropdown-item> -->
                                 <el-dropdown-item @click.native="Setting">设置</el-dropdown-item>
-                                <el-dropdown-item @click.native="goGithub">Github</el-dropdown-item>
+                                <!-- <el-dropdown-item @click.native="goGithub">Github</el-dropdown-item> -->
                                 <el-dropdown-item divided @click.native="logout">退出登录</el-dropdown-item>
                             </el-dropdown-menu>
                         </el-dropdown>
