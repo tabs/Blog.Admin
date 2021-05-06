@@ -8,7 +8,7 @@ import applicationUserManager from "../Auth/applicationusermanager";
 
 let base = '';
 // 如果是IIS部署，用这个，因为 IIS 只能是 CORS 跨域，不能代理
-// let base = process.env.NODE_ENV=="production"? 'http://localhost:8081':'';
+// let base = process.env.NODE_ENV=="production"? 'http://jd.chaego.top':'';
 
 
 // 请求延时
