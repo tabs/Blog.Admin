@@ -15,7 +15,13 @@
       <el-table-column type="index" width="80"> </el-table-column>
       <el-table-column prop="jJDUserName" label="用户名" width="" sortable>
       </el-table-column>
-      <el-table-column prop="jJDCookie" label="ck" width="" sortable>
+      <el-table-column
+        prop="jJDCookie"
+        :formatter="formatck"
+        label="Cookie"
+        width=""
+        sortable
+      >
       </el-table-column>
       <el-table-column prop="jRemark" label="备注信息" width="" sortable>
       </el-table-column>
@@ -40,9 +46,18 @@
       <el-table-column prop="jStatus" label="状态" width="" sortable>
         <template slot-scope="scope">
           <el-tag
-            :type="scope.row.jStatus == 0 ? 'danger' : 'success'"
+            :type="scope.row.jStatus == false ? 'danger' : 'success'"
             disable-transitions
-            >{{ scope.row.jStatus == 0 ? "禁用" : "正常" }}
+            >{{ scope.row.jStatus == false ? "禁用" : "正常" }}
+          </el-tag>
+        </template>
+      </el-table-column>
+      <el-table-column prop="jValidation" label="是否失效" width="" sortable>
+        <template slot-scope="scope">
+          <el-tag
+            :type="scope.row.jValidation == false ? 'danger' : 'success'"
+            disable-transitions
+            >{{ scope.row.jValidation == false ? "失效" : "正常" }}
           </el-tag>
         </template>
       </el-table-column>
@@ -92,8 +107,8 @@
         </el-form-item>
         <el-form-item label="状态">
           <el-radio-group v-model="editForm.jStatus">
-            <el-radio class="radio" :label="0">禁用</el-radio>
-            <el-radio class="radio" :label="1">启用</el-radio>
+            <el-radio class="radio" :label="false">禁用</el-radio>
+            <el-radio class="radio" :label="true">启用</el-radio>
           </el-radio-group>
         </el-form-item>
       </el-form>
@@ -309,6 +324,9 @@ export default {
           "yyyy-MM-dd hh:mm:ss"
         );
       }
+    },
+    formatck: function (row, column) {
+      return "已隐藏";
     },
     async getQrcode() {
       var para = {};
